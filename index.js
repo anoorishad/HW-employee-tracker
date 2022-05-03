@@ -15,3 +15,15 @@ const db = mysql.createConnection(
 function mainMenu() {
     inquirer.prompt()
 }
+
+
+
+
+
+
+
+
+
+
+
+mainMenu();
