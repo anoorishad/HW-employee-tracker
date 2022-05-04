@@ -11,7 +11,7 @@ const db = mysql.createConnection(
     console.log("Successfully connected to employee_db.")
 );
 
-
+// Initial main menu
 function mainMenu() {
     inquirer.prompt([
         {
@@ -50,7 +50,10 @@ function mainMenu() {
     })
 }
 
-
+// View All Emloyees
+const viewAllEmp = () => {
+    db.promise().query('SELECT * FROM employee')
+}
 
 
 
