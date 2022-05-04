@@ -18,9 +18,36 @@ function mainMenu() {
             type: 'list',
             message: 'What would you like to do?',
             name: 'option',
-            choices: ["View All Employees", "Add Employee", "Update Employee Role", "View All Roles", "Add Role", "View All Departments", "Add Department"]
+            choices: ["View All Employees", "Add Employee", "Update Employee Role", "View All Roles", "Add Role", "View All Departments", "Add Department","Exit"]
         }
-    ])
+    ]).then(ans => {
+        switch (ans.option) {
+            case "View All Employees":
+                viewAllEmp();
+                break;
+            case "Add Employee":
+                addEmp();
+                break;
+            case "Update Employee Role":
+                updateEmpRole();
+                break;
+            case "View All Roles":
+                viewAllRoles();
+                break;
+            case "Add Role":
+                addRole();
+                break;
+            case "View All Departments":
+                viewAllDepts();
+                break;
+            case "Add Department":
+                addDept();
+                break;
+            default:
+                console.log("You have exited the application");
+                break;
+        }
+    })
 }
 
 
