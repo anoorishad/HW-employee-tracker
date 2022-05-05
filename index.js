@@ -11,10 +11,7 @@ const db = mysql.createConnection(
     console.log("Successfully connected to employee_db.")
 );
 
-const roles = db.query('SELECT title, id FROM role', function(err,results) {
-    results.map(role => { name: role.title, value: role.id}),
-    return roles
-}
+
 
 
 // Initial main menu
@@ -66,6 +63,14 @@ const viewAllEmp = () => {
 
 // Add Employee
 const addEmp = () => {
+    // Pull managers from DB
+    db.query('SELECT first_name, last_name, id FROM employee', function ([res]){
+        res.map(employee => {return managers = {name : employee.first_name + " " + employee.lastname, value: employee.id}})
+    });
+    // Pull employee roles from DB
+    db.query('SELECT title, id FROM role', function ([res]){
+        res.map(role => {return roles = {name: role.title, value: role.id}})
+    });
     inquirer.prompt([
         {
             name: "empFirstName",
@@ -89,7 +94,9 @@ const addEmp = () => {
             message: "Please select employee's manager:",
             choices: managers
         }
-    ]).then
+    ]).then(res => {
+
+    })
 }
 
 
