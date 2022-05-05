@@ -6,7 +6,7 @@ const db = mysql.createConnection(
         host: 'localhost',
         user: 'root',
         password: 'password',
-        database: 'employee_db'
+        database: 'track_db'
     },
     console.log("Successfully connected to employee_db.")
 );
@@ -21,7 +21,7 @@ function mainMenu() {
             type: 'list',
             message: 'What would you like to do?',
             name: 'option',
-            choices: ["View All Employees", "Add Employee", "Update Employee Role", "View All Roles", "Add Role", "View All Departments", "Add Department","Exit"]
+            choices: ["View All Employees", "Add Employee", "Update Employee Role", "View All Roles", "Add Role", "View All Departments", "Add Department", "Exit"]
         }
     ]).then(res => {
         switch (res.option) {
@@ -55,22 +55,40 @@ function mainMenu() {
 
 // View All Emloyees
 const viewAllEmp = () => {
-    db.query('SELECT * FROM employee', function (err,results) {
+    db.query('SELECT * FROM employee', function (err, results) {
         console.log(results);
         mainMenu();
     })
 }
 
+
+
+const getManagers = () => {
+    return new Promise((fulfill, reject) => {
+        const manager = []
+        db.query('SELECT first_name, last_name, id FROM employee', (err, res) => {
+            if (err) reject(err);
+            for (let index = 0; index < res.length; index++) {
+                manager.push({ name: res[index].first_name + " " + res[index].last_name, value: res[index].id })
+
+            }
+            fulfill(manager)
+        })
+    })
+};
+
+
+
+
 // Add Employee
-const addEmp = () => {
+const addEmp = async () => {
     // Pull managers from DB
-    db.query('SELECT first_name, last_name, id FROM employee', function ([res]){
-        res.map(employee => {return managers = {name : employee.first_name + " " + employee.lastname, value: employee.id}})
-    });
+    const managers = await getManagers();
+
     // Pull employee roles from DB
-    db.query('SELECT title, id FROM role', function ([res]){
-        res.map(role => {return roles = {name: role.title, value: role.id}})
-    });
+    // const roles = await db.query('SELECT title, id FROM role', function ([res]){
+    //     res.map(role => {return {name: role.title, value: role.id}})
+    // });
     inquirer.prompt([
         {
             name: "empFirstName",
@@ -82,12 +100,12 @@ const addEmp = () => {
             type: "input",
             message: "Please enter the employee's last name:"
         },
-        {
-            name: "empRole",
-            type: "list",
-            message: "Please select employee's role:",
-            choices: roles
-        },
+        // {
+        //     name: "empRole",
+        //     type: "list",
+        //     message: "Please select employee's role:",
+        //     choices: roles
+        // },
         {
             name: "empManager",
             type: "list",

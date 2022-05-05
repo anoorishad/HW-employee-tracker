@@ -28,6 +28,6 @@ VALUES
 ("Kunal","Singh",4,null),
 ("Malia","Brown",5,4),
 ("Sarah","Lourd",6,null),
-("Tom","Allen",7,8); 
+("Tom","Allen",7,6); 
 
 SELECT * FROM employee;
