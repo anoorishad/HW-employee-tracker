@@ -62,7 +62,7 @@ const viewAllEmp = () => {
 }
 
 
-
+// function to pull managers from DB
 const getManagers = () => {
     return new Promise((fulfill, reject) => {
         const manager = []
@@ -78,6 +78,21 @@ const getManagers = () => {
 };
 
 
+// function to pull roles from DB
+const getRoles = () => {
+    return new Promise((fulfill,reject) => {
+        const role = []
+        db.query('SELECT title, id FROM role' , (err,res) => {
+            if (err) reject(err);
+            for (let index = 0; index < res.length; index++) {
+                role.push({ name: res[index].title, value: res[index].id})
+                
+            }
+            fulfill(role)
+        }) 
+    })
+};
+
 
 
 // Add Employee
@@ -86,9 +101,8 @@ const addEmp = async () => {
     const managers = await getManagers();
 
     // Pull employee roles from DB
-    // const roles = await db.query('SELECT title, id FROM role', function ([res]){
-    //     res.map(role => {return {name: role.title, value: role.id}})
-    // });
+    const roles = await getRoles();
+
     inquirer.prompt([
         {
             name: "empFirstName",
@@ -100,12 +114,12 @@ const addEmp = async () => {
             type: "input",
             message: "Please enter the employee's last name:"
         },
-        // {
-        //     name: "empRole",
-        //     type: "list",
-        //     message: "Please select employee's role:",
-        //     choices: roles
-        // },
+        {
+            name: "empRole",
+            type: "list",
+            message: "Please select employee's role:",
+            choices: roles
+        },
         {
             name: "empManager",
             type: "list",
