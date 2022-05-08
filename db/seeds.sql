@@ -1,10 +1,11 @@
 USE track_db;
 
 INSERT INTO department (name)
-VALUES ("Sales"),
-       ("Engineering"),
-       ("Finance"),
-       ("Legal");
+VALUES 
+("Sales"),
+("Engineering"),
+("Finance"),
+("Legal");
 
 SELECT * FROM department;
 
