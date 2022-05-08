@@ -8,7 +8,7 @@ const db = mysql.createConnection(
         password: 'password',
         database: 'track_db'
     },
-    console.log("Successfully connected to employee_db.")
+    console.log("Successfully connected to track_db.")
 );
 
 
@@ -57,7 +57,7 @@ function mainMenu() {
 const viewAllEmp = () => {
     db.query('SELECT * FROM employee', function (err, results) {
         if (err) throw err;
-        console.log(results);
+        console.table(results);
         mainMenu();
     })
 };
@@ -65,7 +65,7 @@ const viewAllEmp = () => {
 const viewAllRoles = () => {
     db.query('SELECT * FROM role', function (err, results) {
         if (err) throw err;
-        console.log(results);
+        console.table(results);
         mainMenu();
     })
 };
@@ -73,7 +73,7 @@ const viewAllRoles = () => {
 const viewAllDepts = () => {
     db.query('SELECT * FROM department', function (err, results) {
         if (err) throw err;
-        console.log(results);
+        console.table(results);
         mainMenu();
     })
 };
